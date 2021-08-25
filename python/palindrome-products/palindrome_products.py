@@ -16,19 +16,17 @@ def largest(min_factor: int, max_factor: int) -> tuple[Union[int, None], list[li
     if min_factor > max_factor:
         raise ValueError("min_factor must be greater than max_factor.")
 
-    factors: list[list[int]] = []
-
-    palindromes: list[int] = []
+    palindromes: dict[int, list[list[int]]] = {} 
     for a, b in get_all_pairs(min_factor, max_factor):
         if is_palindrome(a * b):
-            palindromes.append(a * b)
-            factors.append([a, b])
+            if a * b in palindromes:
+                palindromes[a * b].append([a, b])
+            else:
+                palindromes[a * b] = [[a, b]]
 
     if palindromes:
-        max_palindrome = max(palindromes)
-        max_factors = [fac for fac in factors if reduce(lambda x, y: x * y, fac) == max_palindrome]
-
-        return max_palindrome, max_factors
+        max_palindrome = max(palindromes.keys())
+        return max_palindrome, palindromes[max_palindrome]
 
     return None, []
 
@@ -37,18 +35,17 @@ def smallest(min_factor: int, max_factor: int) -> tuple[Union[int, None], list[l
     if min_factor > max_factor:
         raise ValueError("min_factor must be greater than max_factor.")
 
-    factors: list[list[int]] = []
-
-    palindromes: list[int] = []
+    palindromes: dict[int, list[list[int]]] = {}
     for a, b in get_all_pairs(min_factor, max_factor):
         if is_palindrome(a * b):
-            palindromes.append(a * b)
-            factors.append([a, b])
+            if a * b in palindromes:
+                palindromes[a * b].append([a, b])
+            else:
+                palindromes[a * b] = [[a, b]]
 
     if palindromes:
-        min_palindrome = min(palindromes)
-        min_factors = [fac for fac in factors if reduce(lambda x, y: x * y, fac) == min_palindrome]
+        min_palindrome = min(palindromes.keys())
 
-        return min_palindrome, min_factors
+        return min_palindrome, palindromes[min_palindrome]
 
     return None, []
