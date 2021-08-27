@@ -1,13 +1,13 @@
 def is_isogram(string: str) -> bool:
-    found_letters: list[str] = []
+    string = string.lower()
 
-    for letter in string:
-        letter = letter.lower()
+    found_ch: list[str] = []
 
-        if letter in found_letters:
+    for ch in string:
+        if ch in found_ch:
             return False
 
-        if letter != " " and letter != "-":
-            found_letters.append(letter)
+        if ch.isalpha():
+            found_ch.append(ch)
 
     return True
