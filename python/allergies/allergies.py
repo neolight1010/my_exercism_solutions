@@ -11,10 +11,10 @@ class Allergies:
     }
 
     def __init__(self, score: int):
-        self.allergy_values: list[int] = [] # List of allergy values from score
+        score = score % 256
 
-        while score > sum(Allergies.allergy_names.keys()):
-            score -= 256
+        self.score = score
+        self.allergy_values: list[int] = [] # List of allergy values from score
 
         for n in sorted(Allergies.allergy_names.keys(), reverse=True):
             if score >= n:
