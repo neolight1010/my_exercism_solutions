@@ -1,9 +1,11 @@
+"""
+Litle Sister's Vocabulary solution. Contains functions that transform words.
+"""
 import re
 
 
 def add_prefix_un(word: str) -> str:
     '''
-
     :param word: str of a root word
     :return:  str of root word with un prefix
 
@@ -15,7 +17,6 @@ def add_prefix_un(word: str) -> str:
 
 def make_word_groups(vocab_words: list[str]) -> str:
     '''
-
     :param vocab_words: list of vocabulary words with a prefix
                         in the form [prefix, word1, word2, ...]
     :return: str of prefix followed by vocabulary words with
@@ -25,19 +26,20 @@ def make_word_groups(vocab_words: list[str]) -> str:
     with the prefix  and the words with prefix applied, separated
      by ' :: '.
     '''
-    prefix = vocab_words[0]
-    return f"{prefix} :: " + " :: ".join([prefix + word for word in vocab_words[1:]])
+    prefix, *words = vocab_words
+    prefixed_words = [prefix + word for word in words]
+
+    return f"{prefix} :: " + " :: ".join(prefixed_words)
 
 
 def remove_suffix_ness(word) -> str:
     '''
-
     :param word: str of word to remove suffix from.
     :return: str of word with suffix removed & spelling adjusted.
 
     This function takes in a word and returns the base word with `ness` removed.
     '''
-    VOWELS = set(['a', 'e', 'i', 'o', 'u'])
+    vowels = set(['a', 'e', 'i', 'o', 'u'])
     ness_len = len("ness")
 
     if word[-ness_len:] != "ness":
@@ -45,15 +47,14 @@ def remove_suffix_ness(word) -> str:
 
     root_word = word[:-ness_len]
 
-    if root_word[-1] == 'i' and root_word[-2] not in VOWELS:
+    if root_word[-1] == 'i' and root_word[-2] not in vowels:
         root_word = root_word[:-1] + "y"
 
     return root_word
 
 
-def noun_to_verb(sentence: str, index: int):
+def adjective_to_verb(sentence: str, index: int):
     '''
-
     :param sentence: str that uses the word in sentence
     :param index:  index of the word to remove and transform
     :return:  str word that changes the extracted adjective to a verb.
@@ -65,5 +66,5 @@ def noun_to_verb(sentence: str, index: int):
     '''
     clean_sentence = re.sub(r"[^\w\s]", '', sentence)
 
-    return clean_sentence.split()[index] + "en"
-
+    adjective = clean_sentence.split()[index]
+    return adjective + "en"
