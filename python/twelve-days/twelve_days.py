@@ -3,18 +3,18 @@ ORDINAL_NUMBERS = ["first", "second", "third", "fourth", "fifth",
 
 
 GIFTS = [
-    "a Partridge in a Pear Tree",
-    "two Turtle Doves",
-    "three French Hens",
-    "four Calling Birds",
-    "five Gold Rings",
-    "six Geese-a-Laying",
-    "seven Swans-a-Swimming",
-    "eight Maids-a-Milking",
-    "nine Ladies Dancing",
-    "ten Lords-a-Leaping",
-    "eleven Pipers Piping",
-    "twelve Drummers Drumming"
+    "a Partridge in a Pear Tree.",
+    "two Turtle Doves, and",
+    "three French Hens,",
+    "four Calling Birds,",
+    "five Gold Rings,",
+    "six Geese-a-Laying,",
+    "seven Swans-a-Swimming,",
+    "eight Maids-a-Milking,",
+    "nine Ladies Dancing,",
+    "ten Lords-a-Leaping,",
+    "eleven Pipers Piping,",
+    "twelve Drummers Drumming,"
 ]
 
 
@@ -33,14 +33,9 @@ def gift_list_sentence(day: int) -> str:
     validate_day(day)
 
     day_i = day - 1
-    sentence = GIFTS[day_i]
+    sentences: list[str] = GIFTS[day_i::-1]
 
-    if day_i == 0:
-        return sentence + "."
-
-    separator = ", " if day_i > 1 else ", and "
-
-    return sentence + separator + gift_list_sentence(day - 1)
+    return " ".join(sentences)
 
 
 def recite(start_verse: int, end_verse: int) -> list[str]:
