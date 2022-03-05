@@ -37,7 +37,7 @@ def proteins(strand: str) -> list[str]:
     result: list[str] = []
 
     for i in range(0, len(strand), 3):
-        codon = strand[i: i+3]
+        codon = strand[i : i+3]
         translation = CODON_PROTEINS[codon]
 
         if translation == Protein.STOP:

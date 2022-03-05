@@ -1,6 +1,8 @@
 import unittest
 
-from protein_translation import proteins
+from protein_translation import (
+    proteins,
+)
 
 # Tests adapted from `problem-specifications//canonical-data.json`
 
@@ -89,6 +91,16 @@ class ProteinTranslationTest(unittest.TestCase):
     def test_stop_codon_rna_sequence_3(self):
         value = "UGA"
         expected = []
+        self.assertEqual(proteins(value), expected)
+
+    def test_sequence_of_two_protein_codons_translates_into_proteins(self):
+        value = "UUUUUU"
+        expected = ["Phenylalanine", "Phenylalanine"]
+        self.assertEqual(proteins(value), expected)
+
+    def test_sequence_of_two_different_protein_codons_translates_into_proteins(self):
+        value = "UUAUUG"
+        expected = ["Leucine", "Leucine"]
         self.assertEqual(proteins(value), expected)
 
     def test_translate_rna_strand_into_correct_protein_list(self):
