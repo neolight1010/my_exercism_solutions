@@ -1,24 +1,21 @@
 module DNA (nucleotideCounts, Nucleotide (..)) where
 
-import Data.Map (Map, fromList, fromListWith, toList)
+import Data.Map (Map, fromListWith)
 
 data Nucleotide = A | C | G | T deriving (Eq, Ord, Show)
 
 nucleotideCounts :: String -> Either String (Map Nucleotide Int)
-nucleotideCounts xs = fromList <$> mapM toNucleotideCountTuple (charCountList xs)
+nucleotideCounts xs = nucleotideCounts' <$> nucleotides
+  where 
+    nucleotides = mapM toNucleotide xs
 
-toNucleotideCountTuple :: (Char, Int) -> Either String (Nucleotide, Int)
-toNucleotideCountTuple (char, count) = case toNucleotide char of
-  Right n -> Right (n, count)
-  Left c -> Left $ show c
+nucleotideCounts' :: [Nucleotide] -> Map Nucleotide Int
+nucleotideCounts' xs = fromListWith (+) [(x, 1) | x <- xs]
 
-charCountList :: String -> [(Char, Int)]
-charCountList xs = toList $ fromListWith (+) [(x, 1) | x <- xs]
-
-toNucleotide :: Char -> Either Char Nucleotide
+toNucleotide :: Char -> Either String Nucleotide
 toNucleotide c = case c of
   'A' -> Right A
   'C' -> Right C
   'G' -> Right G
   'T' -> Right T
-  _ -> Left c
+  _ -> Left $ "Invalid nucleotide: " ++ show c
