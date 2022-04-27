@@ -1,28 +1,18 @@
 {-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TupleSections #-}
 
-module DNA (nucleotideCounts, nucleotideCountsElegant, Nucleotide (..)) where
+module DNA (nucleotideCounts, Nucleotide (..)) where
 
-import Data.Map (Map, fromListWith, insertWith)
-import qualified Data.Map as Map
 import Control.Monad (foldM)
+import Data.Map (Map, insertWith)
+import qualified Data.Map as Map
 
 data Nucleotide = A | C | G | T deriving (Eq, Ord, Show)
 
 nucleotideCounts :: String -> Either String (Map Nucleotide Int)
 nucleotideCounts = foldM appendNucleotide Map.empty
   where
-    appendNucleotide m char = case toNucleotide char of
-      Right n -> Right (insertWith (+) n 1 m)
-      Left s -> Left s
-
-nucleotideCountsElegant :: String -> Either String (Map Nucleotide Int)
-nucleotideCountsElegant xs = nucleotideCounts' <$> nucleotides
-  where
-    nucleotides = mapM toNucleotide xs
-
-nucleotideCounts' :: [Nucleotide] -> Map Nucleotide Int
-nucleotideCounts' xs = fromListWith (+) $ map (,1) xs
+    appendNucleotide m c = increaseNucleotideCount m <$> toNucleotide c
+    increaseNucleotideCount m n = insertWith (+) n 1 m
 
 toNucleotide :: Char -> Either String Nucleotide
 toNucleotide = \case
