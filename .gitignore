@@ -151,3 +151,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+## Clojure .gitignore
+Leiningen.gitignore
+.cpcache/
+.lein-failures
+.lein-repl-history
+.nrepl-port
