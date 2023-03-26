@@ -1,16 +1,15 @@
 (ns cars-assemble)
 
 (defn success-rate [speed]
-  (condp <= speed
-    10 0.77
-    9 0.8
-    8 0.9
-    4 1.0
-    0 0.0
-    ))
+  (cond
+    (= speed 0) 0.0
+    (<= speed 4) 1.0
+    (<= speed 8) 0.9
+    (<= speed 9) 0.8
+    (<= speed 10) 0.77))
 
 (defn production-rate-no-faulty [speed]
-  (* 221 speed))
+  (* 221.0 speed))
 
 (defn production-rate
   "Returns the assembly line's production rate per hour,
@@ -21,4 +20,4 @@
 (defn working-items
   "Calculates how many working cars are produced per minute"
   [speed]
-  (int (quot (production-rate speed) 60)))
+  (int (/ (production-rate speed) 60)))
