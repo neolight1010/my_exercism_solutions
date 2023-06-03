@@ -10,9 +10,7 @@
 
 (defn isosceles? [side-a side-b side-c]
   (and (is-valid? side-a side-b side-c)
-       (or (== side-a side-b)
-       (== side-a side-c)
-       (== side-b side-c))))
+       (<= (count (distinct [side-a side-b side-c])) 2)))
   
 
 (defn scalene? [side-a side-b side-c]
