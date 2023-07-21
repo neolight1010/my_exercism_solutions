@@ -158,3 +158,6 @@ Leiningen.gitignore
 .lein-failures
 .lein-repl-history
 .nrepl-port
+
+## C .gitignore
+*.out
